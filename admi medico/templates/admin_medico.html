@@ -1,0 +1,85 @@
+{% extends 'login.html' %}
+{% block body %}
+    <div class="container">
+        <div class="row justify-content-center mt-5">
+            <div class="col-md-6">
+                <div class="card bg-light border-primary">
+                    <div class="card-body">
+                        <h1 class="card-title text-center mb-4">Administrar Médico</h1>
+                        <form id="medicoForm" method="post" action="{{ url_for('registrar_medico') }}">
+                                <div class="mb-3">
+                                    <label for="rfc" class="form-label">RFC Médico:</label>
+                                    <input type="text" id="rfc" name="rfc" required class="form-control">
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="nombre" class="form-label">Nombre:</label>
+                                    <input type="text" id="nombre" name="nombre" required class="form-control">
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="cedula" class="form-label">Cédula:</label>
+                                    <input type="text" id="cedula" name="cedula" required class="form-control">
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="correo" class="form-label">Correo:</label>
+                                    <input type="email" id="correo" name="correo" required class="form-control">
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="password" class="form-label">Contraseña:</label>
+                                    <input type="password" id="password" name="password" required class="form-control">
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="rol" class="form-label">Rol:</label>
+                                    <input type="text" id="rol" name="rol" required class="form-control">
+                                </div>
+
+                                <div class="d-flex justify-content-center">
+                                    <button type="submit" class="btn btn-primary me-2">Registrar</button>
+                                    <button type="button" class="btn btn-danger" onclick="eliminarMedico()">Eliminar</button>
+                                    <button type="button" class="btn btn-warning" onclick="actualizarMedico()">Actualizar</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endblock %}
+
+    {% block scripts %}
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.18/dist/sweetalert2.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.18/dist/sweetalert2.min.css">
+    <script>
+        function eliminarMedico() {
+            const rfc = document.getElementById("rfc").value;
+            Swal.fire({
+                icon: 'warning',
+                title: '¿Estás seguro?',
+                text: 'Esta acción eliminará el médico permanentemente.',
+                showCancelButton: true,
+                confirmButtonText: 'Sí, eliminar',
+                cancelButtonText: 'Cancelar'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = `/eliminar_medico/${rfc}`;  // Corrección en esta línea
+                }
+            });
+        }
+    
+        function actualizarMedico() {
+            const rfc = document.getElementById("rfc").value;
+            Swal.fire({
+                icon: 'success',
+                title: '¡Médico actualizado!',
+                text: 'Los datos del médico se han actualizado exitosamente.',
+                confirmButtonText: 'Cerrar'
+            });
+        }
+    </script>
+    
+{% endblock %}
+
